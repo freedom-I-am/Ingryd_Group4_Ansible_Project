@@ -1,8 +1,16 @@
 ---
 
-- hosts: all
-- tasks:
-  - name: update each node's software
+- hosts: node1,node2
+  become: true
+  tasks:
+
+  - name: update  node1's (Ubuntu) software
     apt:
-     name: update_cache
-    when: 
+      update_cache: true
+    when: ansible_distribution == "Ubuntu"
+
+
+  - name: update node2's (LinuxOracle) software
+    dnf:
+      update_cache: true
+    when: ansible_distribution == "OracleLinux"
